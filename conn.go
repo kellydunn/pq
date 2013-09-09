@@ -380,7 +380,12 @@ func (cn *conn) Query(query string, args []driver.Value) (_ driver.Rows, err err
 	// Check to see if we can use the "simpleQuery" interface, which is
 	// *much* faster than going through prepare/exec
 	if len(args) == 0 {
-		return cn.simpleQuery(query)
+		simpleRes, simpleErr := cn.simpleQuery(query)
+		if simpleErr != nil {
+			return nil, simpleErr
+		}
+
+		return simpleRes, simpleErr
 	}
 
 	st, err := cn.prepareToSimpleStmt(query, "")
