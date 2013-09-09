@@ -384,7 +384,7 @@ func (cn *conn) Query(query string, args []driver.Value) (_ driver.Rows, err err
 
 	st, err := cn.prepareToSimpleStmt(query, "")
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	st.exec(args)
