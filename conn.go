@@ -290,7 +290,9 @@ func (cn *conn) simpleQuery(q string) (res driver.Rows, err error) {
 		case 'E':
 			st.lasterr = parseError(r)
 			err = st.lasterr
-			
+
+			// We should return the error explictly
+			// And no rows in the event of an error
 			if err != nil {
 				return nil, err
 			}
