@@ -374,6 +374,7 @@ func (cn *conn) Close() (err error) {
 
 // Implement the "Queryer" interface
 func (cn *conn) Query(query string, args []driver.Value) (_ driver.Rows, err error) {
+	fmt.Printf("Calling Queryer Interface method\n")
 	defer errRecover(&err)
 
 	// Check to see if we can use the "simpleQuery" interface, which is
@@ -607,12 +608,15 @@ func (st *stmt) Close() (err error) {
 }
 
 func (st *stmt) Query(v []driver.Value) (_ driver.Rows, err error) {
+	/*
 	defer errRecover(&err)
 
 	st.exec(v)
 
 	fmt.Printf("Returning rows, and no error\n")
 	return &rows{st: st}, nil
+	 */
+	return st.cn.Query(st.query, v)
 }
 
 func (st *stmt) Exec(v []driver.Value) (res driver.Result, err error) {
