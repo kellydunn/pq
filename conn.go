@@ -389,6 +389,7 @@ func (cn *conn) Query(query string, args []driver.Value) (_ driver.Rows, err err
 	}
 
 	st.exec(args)
+	fmt.Printf("Returning rows without error \n")
 	return &rows{st: st}, nil
 }
 
