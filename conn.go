@@ -382,9 +382,11 @@ func (cn *conn) Query(query string, args []driver.Value) (_ driver.Rows, err err
 	if len(args) == 0 {
 		simpleRes, simpleErr := cn.simpleQuery(query)
 		if simpleErr != nil {
+			fmt.Printf("Error in simpleQuery\n")
 			return nil, simpleErr
 		}
 
+		fmt.Printf("Returning Simple Query\n")
 		return simpleRes, simpleErr
 	}
 
