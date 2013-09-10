@@ -251,6 +251,7 @@ func (cn *conn) simpleExec(q string) (res driver.Result, err error) {
 	for {
 		t, r := cn.recv1()
 		switch t {
+		case '1':
 		case 'C':
 			res = parseComplete(r.string())
 		case 'Z':
