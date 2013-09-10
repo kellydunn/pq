@@ -335,7 +335,7 @@ func (cn *conn) prepareToSimpleStmt(q, stmtName string) (_ *stmt, err error) {
 	for {
 		t, r := cn.recv1()
 		switch t {
-		case '1', '2', 'N'://, '3':
+		case '1', '2', 'N', '3':
 		case 't':
 			nparams := int(r.int16())
 			st.paramTyps = make([]oid.Oid, nparams)
