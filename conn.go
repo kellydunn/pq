@@ -281,7 +281,7 @@ func (cn *conn) simpleQuery(q string) (res driver.Rows, err error) {
 	for {
 		t, r := cn.recv1()
 		switch t {
-		case '1', 't':
+		//case '1', 't':
 		case 'C':
 			// done
 			return
@@ -380,6 +380,7 @@ func (cn *conn) Query(query string, args []driver.Value) (_ driver.Rows, err err
 	// Check to see if we can use the "simpleQuery" interface, which is
 	// *much* faster than going through prepare/exec
 	if len(args) == 0 {
+		fmt.Printf("Query: %s\n", query)
 		simpleRes, simpleErr := cn.simpleQuery(query)
 		if simpleErr != nil {
 			return nil, simpleErr
@@ -387,7 +388,7 @@ func (cn *conn) Query(query string, args []driver.Value) (_ driver.Rows, err err
 
 		return simpleRes, simpleErr
 	} else {
-		fmt.Printf("args: %v\n", args)
+		fmt.Printf("query: %s, args: %v\n", query, args)
 	}
 
 	st, err := cn.prepareToSimpleStmt(query, "")
