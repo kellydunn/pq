@@ -281,7 +281,7 @@ func (cn *conn) simpleQuery(q string) (res driver.Rows, err error) {
 	for {
 		t, r := cn.recv1()
 		switch t {
-		//case '1', 't':
+		case '1': //, 't':
 		case 'C':
 			// done
 			return
