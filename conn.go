@@ -258,10 +258,10 @@ func (cn *conn) simpleExec(q string) (res driver.Result, err error) {
 			return
 		case 'E':
 			err = parseError(r)
-		case 'T', 'N', 'S', 'D', '1':
+		case 'T', 'N', 'S', 'D':
 			// ignore
 		default:
-			errorf("unknown response for simple query: %q", t)
+			errorf("unknown response for simple exec: %q", t)
 		}
 	}
 	panic("not reached")
@@ -281,7 +281,7 @@ func (cn *conn) simpleQuery(q string) (res driver.Rows, err error) {
 	for {
 		t, r := cn.recv1()
 		switch t {
-		case '1':
+		case '1', 't':
 		case 'C':
 			// done
 			return
