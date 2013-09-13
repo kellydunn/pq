@@ -288,8 +288,14 @@ func (cn *conn) simpleQuery(q string) (res driver.Rows, err error) {
 			// done
 			return
 		case 'E':
-			st.lasterr = parseError(r)
-			return
+			err = parseError(r)
+			st.lasterr = err
+
+			if err != nil {
+				return nil, err
+			}
+
+			return res, nil
 		case 'T':
 			st.cols, st.rowTyps = parseMeta(r)
 			// After we get the meta, we want to kick out to Next()
